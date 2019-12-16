@@ -78,8 +78,10 @@ Vue.component('message-row', {
         },
         del: function() {
             messageApi.remove({id : this.message.id}).then(result => {
-                this.msg = result.body;
-                this.messages.splice(getId(this.msg, this.messages), 1);
+                if (result.ok) {
+//                    this.msg = this.message;
+                    this.messages.splice(getId(this.message, this.messages), 1);
+                }
             })
         }
     }

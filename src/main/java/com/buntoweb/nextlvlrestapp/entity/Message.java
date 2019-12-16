@@ -1,6 +1,7 @@
 package com.buntoweb.nextlvlrestapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,8 +11,11 @@ import java.time.LocalDateTime;
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(Views.IdMsg.class)
     private Long id;
 
+    @Column(name = "message")
+    @JsonView(Views.IdMsg.class)
     private String msg;
 
     @Column(name = "time_create_at", updatable = false)
@@ -26,12 +30,12 @@ public class Message {
         this.id = id;
     }
 
-    public String getMessage() {
+    public String getMsg() {
         return msg;
     }
 
-    public void setMessage(String message) {
-        this.msg = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public LocalDateTime getCreationDate() {

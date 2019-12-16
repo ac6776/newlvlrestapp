@@ -6,15 +6,15 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table (name = "messages")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String message;
+    private String msg;
 
-    @Column(updatable = false)
+    @Column(name = "time_create_at", updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationDate;
 
@@ -27,11 +27,11 @@ public class Message {
     }
 
     public String getMessage() {
-        return message;
+        return msg;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.msg = message;
     }
 
     public LocalDateTime getCreationDate() {

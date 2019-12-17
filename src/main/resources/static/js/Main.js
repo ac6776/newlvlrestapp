@@ -1,3 +1,8 @@
+import bar from './bar';
+
+bar();
+
+/*
 var messageApi = Vue.resource('http://localhost:8080/api/msg{/id}')
 
 function getId(message, messages) {
@@ -122,4 +127,4 @@ var app = new Vue({
     },
     methods: {
     }
-})
+})*/

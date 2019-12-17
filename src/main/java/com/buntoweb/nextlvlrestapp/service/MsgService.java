@@ -26,8 +26,11 @@ public class MsgService {
     }
 
     public Message addMsg(Message msg){
-        msg.setCreationDate(LocalDateTime.now());
-        return messageRepo.save(msg);
+        if(msg.getMsg().length() != 0) {
+            msg.setCreationDate(LocalDateTime.now());
+            return messageRepo.save(msg);
+        }
+        return null;
     }
 
     public void removeMsg(Long id){

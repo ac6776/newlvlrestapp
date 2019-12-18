@@ -17,6 +17,13 @@
 import InputMessage from "components/InputMessage.vue";
 import MessageRow from "components/MessageRow.vue";
 
+function getId(message, messages) {
+  for (let i = 0; i < messages.length; i++) {
+    if (messages[i].id === message.id) return i;
+  }
+  return -1;
+}
+
 export default {
   components: {
     InputMessage,
@@ -42,14 +49,15 @@ export default {
       this.message = message;
     },
     deleteMessage: function(message) {
-      // this.$resource("http://localhost:8080/api/msg{/id}")
-      // this.$resource("/api/msg{/id}")
-        // .remove({ id: this.message.id })
-        // .then(result => {
-        //   if (result.ok) {
-        //     this.messages.splice(getId(this.message, this.messages), 1);
-        //   }
-        // });
+      this.message = message;
+      this.$resource("http://localhost:8080/api/msg{/id}")
+        // this.$resource("/api/msg{/id}")
+        .remove({ id: this.message.id })
+        .then(result => {
+          if (result.ok) {
+            this.messages.splice(getId(this.message, this.messages), 1);
+          }
+        });
     }
   }
 };

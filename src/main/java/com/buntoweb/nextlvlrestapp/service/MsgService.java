@@ -5,7 +5,6 @@ import com.buntoweb.nextlvlrestapp.repo.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -21,16 +20,14 @@ public class MsgService {
         return (List<Message>) messageRepo.findAll();
     }
 
-    public Message editMsg(Message msg){
-        return messageRepo.save(msg);
-    }
 
-    public Message addMsg(Message msg){
-        if(msg.getMsg().length() != 0) {
-            msg.setCreationDate(LocalDateTime.now());
-            return messageRepo.save(msg);
+    public Message saveMessage(Message message) {
+        if (message.getId() == null) {
+            return messageRepo.save(message);
         }
-        return null;
+        Message messageFromDb = messageRepo.findById(message.getId()).orElse(null);
+        messageFromDb.setMsg(message.getMsg());
+        return messageRepo.save(messageFromDb);
     }
 
     public void removeMsg(Long id){

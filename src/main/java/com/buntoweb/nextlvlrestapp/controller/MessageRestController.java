@@ -38,13 +38,6 @@ public class MessageRestController {
         return msgService.getAllMessages();
     }
 
-    @PutMapping("/msg/{id}")
-    public Message editMessage(@PathVariable int id, @RequestBody Message msg){
-        Message updatedMessage = msgService.saveMessage(msg);
-        wsSender.accept(EventType.UPDATE, updatedMessage);
-        return updatedMessage;
-    }
-
     @PostMapping("/msg")
     public Message addMessage(@RequestBody Message msg){
         Message createdMessage = msgService.saveMessage(msg);
@@ -52,9 +45,16 @@ public class MessageRestController {
         return createdMessage;
     }
 
+    @PutMapping("/msg/{id}")
+    public Message editMessage(@PathVariable int id, @RequestBody Message msg){
+        Message updatedMessage = msgService.saveMessage(msg);
+        wsSender.accept(EventType.UPDATE, updatedMessage);
+        return updatedMessage;
+    }
+
     @DeleteMapping("/msg/{id}")
-    public void deleteMessage(@PathVariable Long id) {
-        msgService.removeMsg(id);
+    public void deleteMessage(@PathVariable("id") Message message) {
+        msgService.removeMsg(message);
         wsSender.accept(EventType.REMOVE, message);
     }
 

@@ -20,7 +20,6 @@ public class MsgService {
         return (List<Message>) messageRepo.findAll();
     }
 
-
     public Message saveMessage(Message message) {
         if (message.getId() == null) {
             return messageRepo.save(message);
@@ -30,7 +29,7 @@ public class MsgService {
         return messageRepo.save(messageFromDb);
     }
 
-    public void removeMsg(Long id){
-        messageRepo.deleteById(id);
+    public void removeMsg(Message message){
+        messageRepo.delete(message);
     }
 }

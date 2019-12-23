@@ -51,7 +51,6 @@ export default {
     deleteMessage: function(message) {
       this.message = message;
       this.$resource("http://localhost:8080/api/msg{/id}")
-        // this.$resource("/api/msg{/id}")
         .remove({ id: this.message.id })
         .then(result => {
           if (result.ok) {

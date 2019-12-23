@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class MsgService {
-    public MessageRepo messageRepo;
+    private MessageRepo messageRepo;
 
     @Autowired
     private void setMessageRepo(MessageRepo messageRepo) {

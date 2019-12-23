@@ -8,7 +8,8 @@
 </template>
 
 <script>
-import { sendMessage } from 'util/ws'
+// import { sendMessage } from 'util/ws'
+import messagesApi from "api/messages";
 
 export default {
   props: ["messages", "messageAttr"],
@@ -26,7 +27,27 @@ export default {
   },
   methods: {
     save: function() {
-      sendMessage({id: this.id, msg: this.msg});
+      // sendMessage({id: this.id, msg: this.msg});
+      const message = {
+        id: this.id,
+        msg: this.msg
+      };
+
+      if (this.id) {
+        messagesApi
+          .update(message)
+          .then(result =>
+            result
+              .json()
+              .then(data =>
+                this.messages.splice(this.messages.indexOf(data), 1, data) //edit to findIndex(item => item.id === data.id)
+              )
+          );
+      } else {
+        messagesApi
+          .add(message)
+          .then(result => result.json().then(data => this.messages.push(data)));
+      }
       this.msg = "";
       this.id = "";
     }

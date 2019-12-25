@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     save: function() {
-      // sendMessage({id: this.id, msg: this.msg});
       const message = {
         id: this.id,
         msg: this.msg
@@ -36,17 +35,24 @@ export default {
       if (this.id) {
         messagesApi
           .update(message)
-          .then(result =>
-            result
-              .json()
-              .then(data =>
-                this.messages.splice(this.messages.indexOf(data), 1, data) //edit to findIndex(item => item.id === data.id)
-              )
-          );
+          .then(result => {
+            if(result.ok) {
+              console.log(`UPDATED: ${message.id}, ${message.msg}`)
+            }
+          }          
+        );
       } else {
         messagesApi
           .add(message)
-          .then(result => result.json().then(data => this.messages.push(data)));
+          .then(result =>              
+            result
+              .json()
+              .then(data => {
+                if (result.ok) {
+                  console.log(`CREATED: ${data.id}, ${data.msg}`)
+                }
+              })
+          )
       }
       this.msg = "";
       this.id = "";

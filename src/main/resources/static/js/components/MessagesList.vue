@@ -16,7 +16,7 @@
 <script>
 import InputMessage from "components/InputMessage.vue";
 import MessageRow from "components/MessageRow.vue";
-import messagesApi from 'api/messages'
+import messagesApi from "api/messages";
 
 export default {
   components: {
@@ -29,28 +29,16 @@ export default {
       message: null
     };
   },
-  created: function() {
-    messagesApi
-      .get()
-      .then(result =>
-        result
-          .json()
-          .then(data => data.forEach(message => this.messages.push(message)))
-      );
-  },
   methods: {
     editMessage: function(message) {
       this.message = message;
     },
     deleteMessage: function(message) {
-      this.message = message;
-      messagesApi
-        .remove({ id: this.message.id })
-        .then(result => {
-          if (result.ok) {
-            this.messages.splice(this.messages.indexOf(this.message), 1); //edit to findIndex(item => item.id === data.id)
-          }
-        });
+      messagesApi.remove(message.id).then(result => {
+        if (result.ok) {
+          console.log(`DELETED: ${message.id}, ${message.msg}`)
+        }
+      });
     }
   }
 };

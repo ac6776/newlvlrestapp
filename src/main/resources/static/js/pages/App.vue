@@ -14,17 +14,31 @@ export default {
   },
   data: function() {
     return {
-      messages: [],
+      messages: frontendData,
       message: ""
     };
   },
   created: function() {
     addHandler(data => {
-      // let index = getId(data, this.messages);
-      if (index > -1) {
-        this.messages.splice(this.messages.indexOf(data), 1, data);
+      if (data.objectType === 'MESSAGE') {
+        const index = this.messages.findIndex(item => item.id === data.body.id)
+        switch (data.eventType) {
+          case 'CREATE':
+          case 'UPDATE':
+            if (index > -1){
+              this.messages.splice(index, 1, data.body)
+            } else {
+              this.messages.push(data.body)
+            }
+            break
+          case 'REMOVE':
+            this.messages.splice(index, 1)
+            break
+          default:
+            console.error(`EventType is unknown: "${data.eventType}"`)
+        }
       } else {
-        this.messages.push(data);
+          console.error(`ObjectType is unknown: "${data.objectType}"`)
       }
     });
   }

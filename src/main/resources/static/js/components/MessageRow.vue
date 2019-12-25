@@ -18,8 +18,8 @@ export default {
     },
     del: function() {
       this.deleteMessage(this.message);
-      this.message.msg = "";
-      this.message.id = "";
+      // this.message.msg = "";
+      // this.message.id = "";
     }
   }
 };

@@ -9,8 +9,6 @@ import com.buntoweb.nextlvlrestapp.service.MsgService;
 import com.buntoweb.nextlvlrestapp.util.WsSender;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +37,7 @@ public class MessageRestController {
     }
 
     @PostMapping("/msg")
+    @JsonView(Views.IdMsg.class)
     public Message addMessage(@RequestBody Message msg){
         Message createdMessage = msgService.saveMessage(msg);
         wsSender.accept(EventType.CREATE, createdMessage);
@@ -46,6 +45,7 @@ public class MessageRestController {
     }
 
     @PutMapping("/msg/{id}")
+    @JsonView(Views.IdMsg.class)
     public Message editMessage(@PathVariable int id, @RequestBody Message msg){
         Message updatedMessage = msgService.saveMessage(msg);
         wsSender.accept(EventType.UPDATE, updatedMessage);

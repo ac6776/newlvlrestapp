@@ -9,6 +9,7 @@ export function connect() {
   stompClient = Stomp.over(function(){
     return new SockJS("/gs-guide-websocket");
     });
+  stompClient.debug = () => {}
   stompClient.connect({}, function(frame) {
     // console.log("Connected: " + frame);
     stompClient.subscribe("/topic/activity", message => {

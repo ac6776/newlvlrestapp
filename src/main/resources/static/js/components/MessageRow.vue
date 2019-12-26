@@ -10,14 +10,18 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
+
 export default {
-  props: ["message", "messages", "deleteMessage", "editMessage"],
+  // props: ["message", "messages", "deleteMessage", "editMessage"],
+  props: ["message", "editMessage"],
   methods: {
+    ...mapActions(["removeMessageAction"]),
     edit: function() {
       this.editMessage(this.message);
     },
     del: function() {
-      this.deleteMessage(this.message);
+      this.removeMessageAction(this.message);
       // this.message.msg = "";
       // this.message.id = "";
     }
